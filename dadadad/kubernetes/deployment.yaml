@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: dadadad
+  name: dadadad
+  labels:
+    app: dadadad
+spec:
+  selector:
+    matchLabels:
+      app: dadadad
+  template:
+    metadata:
+      labels:
+        app: dadadad
+        name: dadadad
+    spec:
+      containers:
+        - name: dadadad
+          image: mahendrabagul/dadadad/dadadad
+          imagePullPolicy: Always
+        
+          env:
+            - name: SERVICE_NAME
+              value: "go-app"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "localhost:4317"
+            - name: INSECURE_MODE
+              value: "true"
+        
+          ports:
+        
+        
+          - containerPort: 4333
+            name: http
+        
+        
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 30
+        
